@@ -132,6 +132,113 @@ static NSString * const KMGSColourSchemeExt = @"plist";
 
 #pragma mark - Default Color Schemes
 
++ (NSColor*) defaultErrorHighlightingColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"DefaultErrorHighlighting" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1];
+	}
+}
+
++ (NSColor*) textInvisibleCharactersColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"TextInvisibleCharacters" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor blackColor];
+	}
+}
+
++ (NSColor*) keyCurrentLineHighlightColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"KeyCurrentLineHighlight" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor blackColor];
+	}
+}
+
++ (NSColor*) autoCompleteColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"AutoComplete" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.84f green:0.41f blue:0.006f alpha:1.0];
+	}
+}
+
++ (NSColor*) attributeColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Attribute" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.50f green:0.5f blue:0.2f alpha:1.0];
+	}
+}
+
++ (NSColor*) commandColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Command" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0];
+	}
+}
+
++ (NSColor*) commentColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Comment" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.0f green:0.45f blue:0.0f alpha:1.0];
+	}
+}
+
++ (NSColor*) instructionColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Instruction" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0];
+	}
+}
+
++ (NSColor*) keywordColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Keyword" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0];
+	}
+}
+
++ (NSColor*) numberColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Number" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0];
+	}
+}
+
++ (NSColor*) stringColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"String" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.804f green:0.071f blue:0.153f alpha:1.0];
+	}
+}
+
++ (NSColor*) variableColor
+{
+	if (@available(macOS 10.13, *)) {
+		return [NSColor colorNamed:@"Variable" bundle:[NSBundle bundleForClass:self]];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.73f green:0.0f blue:0.74f alpha:1.0];
+	}
+}
 
 + (instancetype)defaultColorSchemeForAppearance:(NSAppearance *)appearance
 {
@@ -190,52 +297,24 @@ static NSString * const KMGSColourSchemeExt = @"plist";
         MGSSyntaxGroupNumber        : @YES,
         MGSSyntaxGroupString        : @YES,
         MGSSyntaxGroupVariable      : @YES};
-    
-    BOOL dark = NO;
-    if (@available(macOS 10.14.0, *)) {
-        NSString *best = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
-        dark = [best isEqual:NSAppearanceNameDarkAqua];
-    }
-    
-    NSDictionary *colors;
-    NSDictionary *groupColors;
-    if (!dark) {
-        colors = @{
-            MGSColourSchemeKeyDefaultErrorHighlightingColor : [NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1],
-            MGSColourSchemeKeyTextInvisibleCharactersColour : [NSColor blackColor],
-            MGSColourSchemeKeyTextColor                     : [NSColor blackColor],
-            MGSColourSchemeKeyBackgroundColor               : [NSColor whiteColor],
-            MGSColourSchemeKeyInsertionPointColor           : [NSColor blackColor],
-            MGSColourSchemeKeyCurrentLineHighlightColour    : [NSColor colorWithCalibratedRed:0.96f green:0.96f blue:0.71f alpha:1.0]};
-        groupColors = @{
-            MGSSyntaxGroupAutoComplete : [NSColor colorWithCalibratedRed:0.84f green:0.41f blue:0.006f alpha:1.0],
-            MGSSyntaxGroupAttribute    : [NSColor colorWithCalibratedRed:0.50f green:0.5f blue:0.2f alpha:1.0],
-            MGSSyntaxGroupCommand      : [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0],
-            MGSSyntaxGroupComment      : [NSColor colorWithCalibratedRed:0.0f green:0.45f blue:0.0f alpha:1.0],
-            MGSSyntaxGroupInstruction  : [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0],
-            MGSSyntaxGroupKeyword      : [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0],
-            MGSSyntaxGroupNumber       : [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0],
-            MGSSyntaxGroupString       : [NSColor colorWithCalibratedRed:0.804f green:0.071f blue:0.153f alpha:1.0],
-            MGSSyntaxGroupVariable     : [NSColor colorWithCalibratedRed:0.73f green:0.0f blue:0.74f alpha:1.0]};
-    } else {
-        colors = @{
-            MGSColourSchemeKeyDefaultErrorHighlightingColor : [NSColor colorWithCalibratedWhite:0.4 alpha:1.0],
-            MGSColourSchemeKeyTextInvisibleCharactersColour : [NSColor colorWithCalibratedRed:0.905882f green:0.905882f blue:0.905882f alpha:1.0],
-            MGSColourSchemeKeyTextColor                     : [NSColor whiteColor],
-            MGSColourSchemeKeyBackgroundColor               : [NSColor blackColor],
-            MGSColourSchemeKeyInsertionPointColor           : [NSColor whiteColor],
-            MGSColourSchemeKeyCurrentLineHighlightColour    : [NSColor blackColor]};
-        groupColors = @{
-            MGSSyntaxGroupAutoComplete : [NSColor colorWithCalibratedRed:0.84f green:0.41f blue:0.006f alpha:1.0],
-            MGSSyntaxGroupAttribute    : [NSColor colorWithCalibratedRed:0.5f green:0.5f blue:0.2f alpha:1.0],
-            MGSSyntaxGroupCommand      : [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0],
-            MGSSyntaxGroupComment      : [NSColor colorWithCalibratedRed:0.254902f green:0.8f blue:0.270588f alpha:1.0],
-            MGSSyntaxGroupInstruction  : [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0],
-            MGSSyntaxGroupKeyword      : [NSColor colorWithCalibratedRed:0.827451f green:0.094118f blue:0.580392f alpha:1.0],
-            MGSSyntaxGroupNumber       : [NSColor colorWithCalibratedRed:0.466667f green:0.427451f blue:1.0f alpha:1.0],
-            MGSSyntaxGroupString       : [NSColor colorWithCalibratedRed:1.0f green:0.172549f blue:0.219608f alpha:1.0],
-            MGSSyntaxGroupVariable     : [NSColor colorWithCalibratedRed:0.73f green:0.0f blue:0.74f alpha:1.0]};
-    }
+        
+	NSDictionary *colors = @{
+		MGSColourSchemeKeyDefaultErrorHighlightingColor : [self defaultErrorHighlightingColor],
+		MGSColourSchemeKeyTextInvisibleCharactersColour : [self textInvisibleCharactersColor],
+		MGSColourSchemeKeyTextColor                     : [NSColor textColor],
+		MGSColourSchemeKeyBackgroundColor               : [NSColor textBackgroundColor],
+		MGSColourSchemeKeyInsertionPointColor           : [NSColor textColor],
+		MGSColourSchemeKeyCurrentLineHighlightColour    : [self keyCurrentLineHighlightColor]};
+	NSDictionary *groupColors = @{
+		MGSSyntaxGroupAutoComplete : [self autoCompleteColor],
+		MGSSyntaxGroupAttribute    : [self attributeColor],
+		MGSSyntaxGroupCommand      : [self commandColor],
+		MGSSyntaxGroupComment      : [self commentColor],
+		MGSSyntaxGroupInstruction  : [self instructionColor],
+		MGSSyntaxGroupKeyword      : [self keywordColor],
+		MGSSyntaxGroupNumber       : [self numberColor],
+		MGSSyntaxGroupString       : [self stringColor],
+		MGSSyntaxGroupVariable     : [self variableColor]};
     
     [common addEntriesFromDictionary:colors];
     NSMutableDictionary *groups = [NSMutableDictionary dictionary];
